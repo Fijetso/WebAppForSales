@@ -1,15 +1,6 @@
-var express = require("express");
-var router = express.Router();
-require("jsdom").env("", function(err, window) {
-  if (err) {
-    console.error(err);
-    return;
-  }
-
-  var $ = require("jquery")(window);
-});
-
-$(".tabPages").addClass("active");
+var express = require("express"),
+  router = express.Router();
+var pages = [];
 
 /* GET pages */
 router.get("/pages", function(req, res, next) {
@@ -19,5 +10,14 @@ router.get("/pages", function(req, res, next) {
 router.get("/pages/add", function(req, res, next) {
   res.render("admin/pages/add_page");
 });
-
+router.post("/pages", function(req, res, next) {
+  var addPage = [];
+  addPage.push({
+    title: req.body.pageTitle,
+    slug: req.body.pageSlug,
+    content: req.body.pageContent
+  });
+  console.log(addPage);
+  res.redirect("pages");
+});
 module.exports = router;

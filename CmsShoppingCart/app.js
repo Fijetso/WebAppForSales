@@ -1,9 +1,31 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var bodyParser = require("body-parser");
+var createError = require("http-errors"),
+  express = require("express"),
+  path = require("path"),
+  cookieParser = require("cookie-parser"),
+  logger = require("morgan"),
+  bodyParser = require("body-parser"),
+  mongoose = require("mongoose");
+
+// var MongoClient = require("mongodb").MongoClient;
+//Create a database named "mydb":
+var url = "mongodb://localhost:27017/cms";
+
+// MongoClient.connect(
+//   url,
+//   function(err, db) {
+//     if (err) throw err;
+//     console.log("Database created!");
+//     db.close();
+//   }
+// );
+mongoose.connect(
+  url,
+  { useNewUrlParser: true }
+);
+var dog = new mongoose.Schema({
+  name: { type: String, default: "new name" },
+  address: { type: String }
+});
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
